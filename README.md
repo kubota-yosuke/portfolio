@@ -15,3 +15,7 @@
 🔹各募集に対して、アプリ内でのメッセージ機能を通じて合意できればマッチング
 
 🔹日時、場所で絞り込み可能
+
+
+### 画面遷移図
+https://www.figma.com/file/guIL69aiRFXTwgwPBfA49j/portfolio?node-id=0%3A1
