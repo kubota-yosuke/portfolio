@@ -21,4 +21,4 @@
 https://www.figma.com/file/guIL69aiRFXTwgwPBfA49j/portfolio?node-id=0%3A1
 
 ### ER図
-https://app.diagrams.net/#G1opC8YnDwjchD8zFe5upMGIsSKz1rEwkB
+https://drive.google.com/file/d/1opC8YnDwjchD8zFe5upMGIsSKz1rEwkB/view?usp=sharing
