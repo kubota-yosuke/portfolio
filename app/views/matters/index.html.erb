@@ -1,0 +1,31 @@
+<h1>Matters#index</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Place</th>
+      <th>Description</th>
+      <th>User</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @matters.each do |matter| %>
+      <tr>
+        <td><%= matter.title %></td>
+        <td><%= matter.place %></td>
+        <td><%= matter.description %></td>
+        <td><%= matter.user.email %></td>
+        <td><%= link_to 'Show', matter %></td>
+        <td><%= link_to 'Edit', edit_matter_path(matter) %></td>
+        <td><%= link_to 'Destroy', matter, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'new matter', new_matter_path %>
