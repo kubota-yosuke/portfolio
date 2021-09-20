@@ -1,0 +1,11 @@
+<h1>Matters#likes</h1>
+
+<table>
+  <% if @like_matters.present? %> 
+    <%= render @like_matters %>
+  <% else %>
+    <p>No Like Matters</p>
+  <% end %>
+</table>
+
+<%= link_to 'Back', matters_path %>

@@ -41,6 +41,10 @@ class MattersController < ApplicationController
     redirect_to matters_url
   end
 
+  def likes
+    @like_matters = current_user.like_matters.includes(:user).order(created_at: :desc)
+  end 
+
   private
   def matter_params
     params.require(:matter).permit(:title, :place, :description)
