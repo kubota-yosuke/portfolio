@@ -12,6 +12,9 @@ class User < ApplicationRecord
   has_many :likes, dependent: :destroy
   has_many :like_matters, through: :likes, source: :matter
 
+  has_many :messages, dependent: :destroy
+  has_many :entries, dependent: :destroy
+
   def like(matter)
     like_matters << matter
   end
