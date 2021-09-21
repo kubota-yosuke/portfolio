@@ -1,0 +1,9 @@
+<h1>Matters#show</h1>
+
+<h2><%= @matter.title %></h2>
+<p><%= @matter.place %></p>
+<p><%= @matter.description %></p>
+<%= render 'like_button', matter: @matter %>
+
+<%= link_to 'edit', edit_matter_path(@matter) %>
+<%= link_to 'Back', matters_path %>

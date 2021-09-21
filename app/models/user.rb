@@ -6,4 +6,21 @@ class User < ApplicationRecord
   validates :password_confirmation, presence: true, if: -> { new_record? || changes[:crypted_password] }
 
   validates :email, uniqueness: true
+
+  has_many :matters, dependent: :destroy
+
+  has_many :likes, dependent: :destroy
+  has_many :like_matters, through: :likes, source: :matter
+
+  def like(matter)
+    like_matters << matter
+  end
+
+  def unlike(matter)
+    like_matters.destroy(matter)
+  end
+
+  def like?(matter)
+    like_matters.include?(matter)
+  end
 end

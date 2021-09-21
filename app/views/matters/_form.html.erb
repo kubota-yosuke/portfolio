@@ -1,0 +1,32 @@
+<% if @matter.errors.any? %>
+  <div id="error_explanation">
+    
+    <ul>
+    <% @matter.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= form_with(model: @matter, local: true) do |form| %>
+  <div>
+    <%= form.label :title %><br>
+    <%= form.text_field :title %>
+  </div>
+  <div>
+    <%= form.label :place %><br>
+    <%= form.text_field :place %>
+  </div>
+  <div>
+    <%= form.label :description %><br>
+    <%= form.text_area :description %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+
+<% end %>
+
+<%= link_to 'Back', matters_path %>
