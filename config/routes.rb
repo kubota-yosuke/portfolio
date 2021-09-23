@@ -12,5 +12,8 @@ Rails.application.routes.draw do
   root :to => 'users#index'
   resources :users
   resources :likes, only: %i[create destroy]
+
+  resources :messages, :only => [:create]
+  resources :rooms, :only => [:create, :show, :index]
   
 end
