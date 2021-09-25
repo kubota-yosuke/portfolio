@@ -15,6 +15,9 @@ class User < ApplicationRecord
   has_many :messages, dependent: :destroy
   has_many :entries, dependent: :destroy
 
+  acts_as_followable
+  acts_as_follower
+
   def like(matter)
     like_matters << matter
   end
