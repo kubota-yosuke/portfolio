@@ -7,6 +7,9 @@ class User < ApplicationRecord
 
   validates :email, uniqueness: true
 
+  has_many :contracts, dependent: :destroy
+  has_many :applies, dependent: :destroy
+
   has_many :matters, dependent: :destroy
 
   has_many :likes, dependent: :destroy

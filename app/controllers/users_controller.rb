@@ -12,6 +12,10 @@ class UsersController < ApplicationController
     @user=User.find(params[:id])
     @currentUserEntry=Entry.where(user_id: current_user.id)
     @userEntry=Entry.where(user_id: @user.id)
+    @rooms = current_user.rooms
+    @applies = Apply.where(matter_id: @user.matters.ids)
+    @contracts = Contract.where(user_id: @user.id)
+    @contractss = Contract.all
     if @user.id == current_user.id
     else
       @currentUserEntry.each do |cu|
@@ -79,13 +83,13 @@ class UsersController < ApplicationController
   def follow
     @user = User.find(params[:user_id])
     current_user.follow(@user)
-    redirect_to user_path(@user)
+    redirect_back fallback_location: root_path
   end
 
   def unfollow
     @user = User.find(params[:user_id])
     current_user.stop_following(@user)
-    redirect_to user_path(@user)
+    redirect_back fallback_location: root_path
   end
 
 
