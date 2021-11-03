@@ -5,6 +5,8 @@ class MattersController < ApplicationController
 
   def show
     @matter = Matter.find(params[:id])
+    @comments = @matter.comments
+    @comment = current_user.comments.new
     @apply = Apply.find_by(matter_id: @matter.id)
   end
 
