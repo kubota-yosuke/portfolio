@@ -3,7 +3,10 @@
 <h2><%= @matter.title %></h2>
 <p><%= @matter.place %></p>
 <p><%= @matter.description %></p>
+<%= image_tag @matter.image if @matter.image.attached? %>
 <%= render 'like_button', matter: @matter %>
+
+<%= link_to "#{@matter.user.email}", @matter.user %>
 
 <%= link_to 'edit', edit_matter_path(@matter) %>
 <%= link_to 'Back', matters_path %>

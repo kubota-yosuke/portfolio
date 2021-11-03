@@ -7,6 +7,9 @@ class User < ApplicationRecord
 
   validates :email, uniqueness: true
 
+  has_many :contracts, dependent: :destroy
+  has_many :applies, dependent: :destroy
+
   has_many :matters, dependent: :destroy
 
   has_many :likes, dependent: :destroy
@@ -14,6 +17,9 @@ class User < ApplicationRecord
 
   has_many :messages, dependent: :destroy
   has_many :entries, dependent: :destroy
+
+  acts_as_followable
+  acts_as_follower
 
   def like(matter)
     like_matters << matter

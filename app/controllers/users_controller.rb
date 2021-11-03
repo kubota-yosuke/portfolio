@@ -12,6 +12,10 @@ class UsersController < ApplicationController
     @user=User.find(params[:id])
     @currentUserEntry=Entry.where(user_id: current_user.id)
     @userEntry=Entry.where(user_id: @user.id)
+    @rooms = current_user.rooms
+    @applies = Apply.where(matter_id: @user.matters.ids)
+    @contracts = Contract.where(user_id: @user.id)
+    @contractss = Contract.all
     if @user.id == current_user.id
     else
       @currentUserEntry.each do |cu|
@@ -74,6 +78,27 @@ class UsersController < ApplicationController
       format.html { redirect_to users_url, notice: "User was successfully destroyed." }
       format.json { head :no_content }
     end
+  end
+
+  def follow
+    @user = User.find(params[:user_id])
+    current_user.follow(@user)
+    redirect_back fallback_location: root_path
+  end
+
+  def unfollow
+    @user = User.find(params[:user_id])
+    current_user.stop_following(@user)
+    redirect_back fallback_location: root_path
+  end
+
+
+  def follow_list
+    @user = User.find(params[:user_id])
+  end
+
+  def follower_list
+    @user = User.find(params[:user_id])
   end
 
   private
