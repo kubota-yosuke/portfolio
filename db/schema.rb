@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_23_143016) do
+ActiveRecord::Schema.define(version: 2021_10_30_122920) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,34 @@ ActiveRecord::Schema.define(version: 2021_09_23_143016) do
     t.string "checksum", null: false
     t.datetime "created_at", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "applies", force: :cascade do |t|
+    t.bigint "matter_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["matter_id"], name: "index_applies_on_matter_id"
+    t.index ["user_id"], name: "index_applies_on_user_id"
+  end
+
+  create_table "comments", force: :cascade do |t|
+    t.string "content"
+    t.bigint "user_id", null: false
+    t.bigint "matter_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["matter_id"], name: "index_comments_on_matter_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "contracts", force: :cascade do |t|
+    t.bigint "matter_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["matter_id"], name: "index_contracts_on_matter_id"
+    t.index ["user_id"], name: "index_contracts_on_user_id"
   end
 
   create_table "entries", force: :cascade do |t|
@@ -76,6 +104,8 @@ ActiveRecord::Schema.define(version: 2021_09_23_143016) do
     t.string "place"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.datetime "start_time"
+    t.datetime "finish_time"
     t.index ["user_id"], name: "index_matters_on_user_id"
   end
 
@@ -101,10 +131,21 @@ ActiveRecord::Schema.define(version: 2021_09_23_143016) do
     t.string "salt"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "name"
+    t.integer "user_type"
+    t.string "reset_password_token"
+    t.datetime "reset_password_token_expires_at"
+    t.datetime "reset_password_email_sent_at"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "applies", "matters"
+  add_foreign_key "applies", "users"
+  add_foreign_key "comments", "matters"
+  add_foreign_key "comments", "users"
+  add_foreign_key "contracts", "matters"
+  add_foreign_key "contracts", "users"
   add_foreign_key "entries", "rooms"
   add_foreign_key "entries", "users"
   add_foreign_key "likes", "matters"

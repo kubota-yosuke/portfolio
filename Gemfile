@@ -60,4 +60,8 @@ gem 'jquery-rails'
 
 gem 'high_voltage'
 
+gem 'kaminari', '1.1.1'
+
+gem 'ransack'
+
 gem 'config', '2.0.0'
