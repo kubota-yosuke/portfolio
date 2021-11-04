@@ -1,45 +1,98 @@
-<p id="notice"><%= notice %></p>
+<div class="row mt-4 mb-3">
+  <div class="col-lg-8 offset-lg-2">
+    <!-- 案件内容 -->
+    <article class="card">
+      <div class="card-body">
+        <div class='row'>
+          <div class='col-md-3'>
+            <% if @user.image.attached? %>
+              <%= image_tag @user.image, class: 'card-img-top img-fluid', size: '300x200' %>
+            <% else %>
+              <%= image_tag 'sample', class: 'card-img-top img-fluid', size: '300x200' %>
+            <% end %>
+          </div>
+
+          <div class="col-md-8">
+            <h3><%= @user.name %></h3>
+            <p>samplet extsampletextsam pletextsampletextsamplete xtsampl etextsa mpletextsamplet
+                exts amplet extsamp lete xtsam p letext sampl ete xtsamp letextsample text sam plet ext 
+            </p>
+          </div>
+
+          <div class= "col-md-1">
+            <%= link_to user_path(@user), method: :delete, data: { confirm: 'Are you sure?' } do %>
+              <%= icon 'fas', 'trash' %>
+            <% end %>
+            <%= link_to edit_user_path(@user) do %>
+              <%= icon 'fa', 'pen' %></a>
+            <% end %>
+          </div>       
+          
+        </div>
+      </div>
+    </article>
+  </div>
+</div>
 
 
+<% if @user.id == current_user.id %>
+  <div class="container pt-3">
 
-<p>
-  <strong>Email:</strong>
-  <%= @user.email %>
-</p>
-
-<p>
-  <strong>Crypted password:</strong>
-  <%= @user.crypted_password %>
-</p>
-
-<p>
-  <strong>Salt:</strong>
-  <%= @user.salt %>
-</p>
-
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
-
-<% unless @user.id == current_user.id %>
-  <% if (current_user.followed_by? @user) && (@user.followed_by? current_user)  %>
-    <% if @isRoom == true %>
-      <p><a href="/rooms/<%= @roomId %>">チャットへ</a>
-    <% else %>
-      <%= form_for @room do |f| %>
-        <%= fields_for @entry do |e| %>
-          <%= e.hidden_field :user_id, :value=> @user.id %>
-        <% end %>
-        <%= f.submit "チャットを始める" %>
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a href="#contents1" class="nav-link active" data-toggle="tab">マッチング中</a>
+      </li>
+      <% if @user.cameraman? %>
+        <li class="nav-item">
+          <a href="#contents2" class="nav-link" data-toggle="tab">申し込み中</a>
+        </li>
+      <% else %>
+        <li class="nav-item">
+          <a href="#contents3" class="nav-link" data-toggle="tab">依頼が来ています</a>
+        </li>
       <% end %>
-    <% end %>
-  <% end %>
+    </ul>
+
+    <div class="tab-content">
+      <div id="contents1" class="tab-pane active">
+        
+        <div class="row">
+          <% if @user.contracts %>
+            <% @contracts.each do |c|%>
+                <%= render 'matters/matter', matter: c.matter %>
+            <% end %>
+          <% end %>
+        </div>
+        <% if @contractss %>
+          <div class="row">
+            <% @contractss.each do |contract| %>
+              <% if contract.matter.user.id == current_user.id %>
+                <%= render 'users/applied_user', matter: contract.matter, user: contract.user, apply: nil %>
+              <% end %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+
+      <% if @user.cameraman? %>
+        <div id="contents2" class="tab-pane">
+          <div class="row">
+            <% @user.applies.each do |app|%>
+              <%= render 'matters/matter', matter: app.matter %>
+            <% end %>
+          </div>
+        </div>
+      <% else %>
+        <div id="contents3" class="tab-pane">
+          <div class="row">
+            <% @applies.each do |app| %>
+              <%= render 'users/applied_user', matter: app.matter, user: app.user, apply: app %>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+  </div>
 <% end %>
 
-<% if current_user.id==@user.id %>
-  <%= @user.follow_count %>
-  <%= link_to "人気になる", {controller: :users,action: :follow_list,user_id: @user.id}, method: :get %>
-  <%= @user.followers_count %>
-  <%= link_to "人あなたを気になる", {controller: :users,action: :follower_list,user_id: @user.id}, method: :get%>
-<% else %>
-  <%= render 'follow' %>
-<% end %>

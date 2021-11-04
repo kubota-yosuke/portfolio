@@ -53,6 +53,9 @@ gem 'sorcery'
 
 gem 'acts_as_follower', github: 'tcocca/acts_as_follower', branch: 'master'
 
+gem 'bootstrap', '~> 4.4.1'
+gem 'bootstrap-sass'
+gem 'font-awesome-sass', '~> 5.12.0'
 
 gem 'high_voltage'
 

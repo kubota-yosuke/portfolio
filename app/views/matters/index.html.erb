@@ -1,9 +1,12 @@
-<h1>Matters#index</h1>
-
-<table>
-  <%= render @matters %>
-</table>
-
-<br>
-
-<%= link_to 'new matter', new_matter_path %>
+<div class="container pt-3">
+  <!-- 掲示板一覧 -->
+  <div class="row">
+    <div class="col-12">
+      <div class="row">
+        <% if @matters.present? %>
+          <%= render @matters %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
