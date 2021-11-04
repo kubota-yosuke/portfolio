@@ -54,4 +54,6 @@ gem 'sorcery'
 gem 'acts_as_follower', github: 'tcocca/acts_as_follower', branch: 'master'
 
 
+gem 'high_voltage'
+
 gem 'config', '2.0.0'
