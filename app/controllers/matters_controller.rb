@@ -1,6 +1,7 @@
 class MattersController < ApplicationController
   def index
-    @matters = Matter.all
+    @q = Matter.ransack(params[:q])
+    @matters = @q.result(distinct: true).order(created_at: :desc).page(params[:page]).per(3)
   end
 
   def show
@@ -48,7 +49,8 @@ class MattersController < ApplicationController
   end
 
   def likes
-    @like_matters = current_user.like_matters.includes(:user).order(created_at: :desc)
+    @q = current_user.like_matters.ransack(params[:q])
+    @like_matters = @q.result(distinct: true).includes(:user).order(created_at: :desc).page(params[:page])
   end
 
   private
