@@ -1,0 +1,13 @@
+<div class="message_list">
+  <% @rooms.each do |room| %>
+    <div class="dm_list__content">
+      <%= link_to room_path(room), class: "dm_list__content__link" do %>
+        <div class="dm_list__content__link__box">
+          <h3 class="dm_list__content__link__box__name">
+            <%= opponent_user(room) %>
+          </h3>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>
