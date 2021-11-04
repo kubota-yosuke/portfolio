@@ -1,23 +1,44 @@
-<thead>
-    <tr>
-        <th>Title</th>
-        <th>Place</th>
-        <th>Description</th>
-        <th>User</th>
-        <th>Like</th>
-        <th colspan="4"></th>
-    </tr>
-</thead>
-
-<tbody>
-    <tr>
-        <td><%= matter.title %></td>
-        <td><%= matter.place %></td>
-        <td><%= matter.description %></td>
-        <td><%= matter.user.email %></td>
-        <td><%= render 'matters/like_button', matter: matter %></td>
-        <td><%= link_to 'Show', matter %></td>
-        <td><%= link_to 'Edit', edit_matter_path(matter) %></td>
-        <td><%= link_to 'Destroy', matter, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-    </tr>
-</tbody>
+<div class="col-sm-12 col-lg-4 mb-3">
+  <div id="board-id-<%= matter.id %>">
+    <div class="card <%= "bg-secondary" if Contract.where(matter_id: matter.id).count >= 1%>">
+      <div class="card-body">
+        <h4 class="card-title">
+        　<%= link_to matter.title, matter %>
+            <div class='mr10 float-right small'>
+                <% if matter.user.id == current_user.id %>
+                    <%= link_to edit_matter_path(matter) do %>
+                        <%= icon 'fa', 'pen' %>
+                    <% end %>
+                    <%= link_to matter_path(matter), method: :delete, data: { confirm: 'Are you sure?' } do %>
+                        <%= icon 'fas', 'trash' %>
+                    <% end %>
+                <% end %>
+                <%= render 'matters/like_button', matter: matter %>
+            </div>
+        </h4>
+        <ul class="list-inline">
+          <li class="list-inline-item">
+            <% if matter.image.attached? %>
+              <%= image_tag matter.image, class: 'card-img-top img-fluid', size: '300x200' %>
+            <% else %>
+              <%= image_tag 'sample', class: 'card-img-top img-fluid', size: '300x200'%>
+            <% end %>
+          </li>
+        </ul>
+        <div>
+          <p class="float-left">場所：</p>
+          <p><%= simple_format(matter.place) %></p>
+        </div>
+        <div>
+          <p class="float-left">開始時間：</p>
+          <p><%= simple_format(matter.start_time.strftime("%m-%d %H:%M")) %></p>
+        </div>
+        <div>
+          <p class="float-left">終了時間：</p>
+          <p><%= simple_format(matter.finish_time.strftime("%m-%d %H:%M")) %></p>
+        </div>
+        <p class="card-text"><%= matter.description %></p>
+      </div>
+    </div>
+  </div>
+</div>
