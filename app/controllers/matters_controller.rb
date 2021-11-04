@@ -53,6 +53,6 @@ class MattersController < ApplicationController
 
   private
   def matter_params
-    params.require(:matter).permit(:title, :place, :description, :image)
+    params.require(:matter).permit(:title, :place, :description, :start_time, :finish_time, :image)
   end
 end

@@ -6,6 +6,7 @@ class User < ApplicationRecord
   validates :password_confirmation, presence: true, if: -> { new_record? || changes[:crypted_password] }
 
   validates :email, uniqueness: true
+  validates :reset_password_token, uniqueness: true, allow_nil: true
 
   has_many :contracts, dependent: :destroy
   has_many :applies, dependent: :destroy
@@ -18,6 +19,10 @@ class User < ApplicationRecord
 
   has_many :messages, dependent: :destroy
   has_many :entries, dependent: :destroy
+
+  has_one_attached :image
+
+  enum user_type: { photomodel: 0, cameraman: 1}
 
   acts_as_followable
   acts_as_follower

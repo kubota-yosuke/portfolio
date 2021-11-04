@@ -1,3 +1,73 @@
+<div class="row mt-3 mb-3">
+    <div class="col-lg-8 offset-lg-2">
+      <!-- 案件内容 -->
+      <article class="card">
+        <div class="card-body">
+          <div class='row'>
+            <div class='col-md-4'>
+              <% if @matter.image.attached? %>
+                <%= image_tag @matter.image, class: 'card-img-top img-fluid', size: '300x200' %>
+              <% end %>
+            </div>
+            <div class='col-md-4'>
+              <h3 class="d-inline"><%= @matter.title %></h3>
+              <p class="list-inline-item">by <%= link_to @matter.user.name, @matter.user %></p>
+              <div>
+                <p class="float-left">場所：</p>
+                <p><%= simple_format(@matter.place) %></p>
+              </div>
+              <div>
+                <p class="float-left">開始時間：</p>
+                <p><%= simple_format(@matter.start_time.strftime("%m-%d %H:%M")) %></p>
+              </div>
+              <div>
+                <p class="float-left">終了時間：</p>
+                <p><%= simple_format(@matter.finish_time.strftime("%m-%d %H:%M")) %></p>
+              </div>
+            </div>
+            <div class='col-md-4'>
+              <div class='mr10'>
+              <div class='row'>
+               <div class='col'>
+
+                <% unless current_user.id == @matter.user.id %>
+                    <% if @matter.user_belonging?(current_user) %>
+                        <%= link_to 'キャンセルする', matter_contract_path(@matter, current_user.contracts.find_by(matter_id: @matter.id)), method: :delete, data:{ confirm: "「#{@matter.title}」をキャンセルします。よろしいですか？" } ,class:"btn btn-danger mini-red-link-btn font-bold text-line-none" %>
+                    <% elsif current_user %>
+                        <% if @apply %>
+                            <%= link_to '申請取消', matter_apply_path(@matter, @apply), method: :delete, class: "btn btn-warning mini-red-link-btn font-bold text-line-none" %>
+                        <% else %>
+                            <%= link_to '申請', matter_applies_path(@matter), method: :post, class: "btn btn-primary mini-green-link-btn font-bold text-line-none" %>
+                        <% end %>
+                    <% end %>
+                <% else %>                
+                    <%= link_to "申請一覧", matter_applies_path(@matter), class:"btn btn-primary" %>
+                <% end %>
+               </div>
+               
+               <div class=''>
+                <% if @matter.user.id == current_user.id %>
+                  <%= link_to edit_matter_path(@matter) do %>
+                    <%= icon 'fa', 'pen' %></a>
+                  <% end %>
+                  <%= link_to matter_path(@matter), method: :delete, data: { confirm: 'Are you sure?' } do %>
+                    <%= icon 'fas', 'trash' %>
+                  <% end %>
+                <% end %>
+                <%= render 'matters/like_button', matter: @matter %>
+               </div>
+               <p class="mt-4">samplet extsampletextsam pletextsampletextsamplete xtsampl etextsa mpletextsamplet
+                exts amplet extsamp lete xtsam p letext sampl ete xtsamp letextsample text sam plet ext 
+            </p>
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+</div>
+
 <div class="w-100">
 <% if @matter.user_belonging?(current_user) || @matter.user.id ==current_user.id %>
     <div class="container">
