@@ -1,11 +1,22 @@
-<h1>Matters#likes</h1>
+<div class="container pt-3">
+  <div class="row">
+    <div class="col-lg-10 offset-lg-1">
+      <!-- 検索フォーム -->
+      <%= render 'search_form', url: matters_path %>
+    </div>
+  </div>
 
-<table>
-  <% if @like_matters.present? %> 
-    <%= render @like_matters %>
-  <% else %>
-    <p>No Like Matters</p>
-  <% end %>
-</table>
 
-<%= link_to 'Back', matters_path %>
+  <!-- 掲示板一覧 -->
+  <div class="row">
+    <div class="col-12">
+      <div class="row">
+        <% if @like_matters.present? %>
+          <%= render @like_matters %>
+        <% else %>
+          <p>No Like Matters</p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
