@@ -1,7 +1,7 @@
 <div id="follow_form">
-  <% if current_user.following? @user %>
-    <%= link_to "気になる削除", {controller: :users,action: :unfollow,user_id: @user.id}, method: :put %>
+  <% if current_user.following?(user) %>
+    <%= link_to "フォロー中", {controller: :users,action: :unfollow,user_id: user.id}, method: :put, class:"btn btn-primary" %>
   <% else %>
-    <%= link_to "気になる", {controller: :users,action: :follow,user_id: @user.id}, method: :put %>
+    <%= link_to "フォローする", {controller: :users,action: :follow,user_id: user.id}, method: :put, class:"btn btn-secondary" %>
   <% end %>
 </div>

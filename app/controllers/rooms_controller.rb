@@ -1,4 +1,9 @@
 class RoomsController < ApplicationController
+
+    def index
+      @rooms = current_user.rooms
+    end
+
     def create
         @room = Room.create
         @entry1 = Entry.create(:room_id => @room.id, :user_id => current_user.id)
